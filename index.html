@@ -1,77 +1,237 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Games questions</title>
-    </head>
+<head>
+  <title>Games Questions</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ff4800;
+    }
 
-    <body style="margin: 0;font-family: arial, sans-serif; padding: 0;background-color:#ff4800">
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      text-align: left;
+    }
 
-        <div style=" 
-        max-width: 800px;
-        margin: 50px auto;
-        background-color: rgb(255, 255, 255);
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        text-align: left;
-        width: 100%;
-        ">
-        <h3 style="color: #333;text-align:center">games questions</h3>
+    .step {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
 
-        <p style="margin-top: 20px; margin-bottom: 5px;">1. which category you like the most</p>
-        <label><input type="radio" name="game1" value="FPS games">FPS games</label><br>
-        <label><input type="radio" name="game1" value="role play games">role play games</label><br>
-        <label><input type="radio" name="game1" value="souls like games">souls like games</label><br>
-        <label><input type="radio" name="game1" value="indie games">indie games</label>
-        
-        <p style="margin-bottom: 5px">2. why do you like that type of games</p>
-        <label><input type="text" placeholder="enter why"></label>
+    .step.active {
+      display: block;
+      opacity: 1;
+    }
 
-        <p style="margin-bottom: 5px">3. what competitive game you like playing</p>
-        <label><input type="text" placeholder="enter name of the game"></label>
+    .buttons {
+      margin-top: 20px;
+    }
 
-        <p style="margin-bottom: 5px">4. what s your highest rank in that game</p>
-        <label><input type="text" placeholder="enter the rank"></label>
+    button {
+      padding: 10px 20px;
+      background-color: #ff4800;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
 
-        <p style="margin-top: 20px; margin-bottom: 5px;">5. which indie game you really liked from these</p>
-        <label><input type="radio" name="game2" value="Hollow knight">Hollow knight</label><br>
-        <label><input type="radio" name="game2" value="celest">celest</label><br>
-        <label><input type="radio" name="game2" value="ultrakill">ultrakill</label><br>
-        <label><input type="radio" name="game2" value="dead cells">dead cells</label>
-        
-        <p style="margin-top: 20px; margin-bottom: 5px;">6. how much you going to rate the experience</p>
-        <label><input type="radio" name="rate" value="8-10">8-10</label><br>
-        <label><input type="radio" name="rate" value="5-8">5-8</label><br>
-        <label><input type="radio" name="rate" value="3-5">3-5</label><br>
-        <label><input type="radio" name="rate" value="0-3">0-3</label>
-        
-        <p style="margin-bottom: 5px;">7. what s special in that game that you choosed</p>
-        <label><input type="text" placeholder="enter"></label>
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      margin-bottom: 12px;
+    }
 
-        <p style="margin-top: 20px; margin-bottom: 5px;">8. in your pov which of these games is more goated</p>
-        <label><input type="radio" name="game3" value="elden ring">elden ring</label><br>
-        <label><input type="radio" name="game3" value="god of war">god of war</label><br>
-        <label><input type="radio" name="game3" value="red dead redemption 2">red dead redemption 2</label><br>
-        <label><input type="radio" name="game3" value="the last of us">the last of us</label>
-        
-        <p style="margin-bottom: 5px;">9. whats the down side of that game</p>
-        <label><input type="text" placeholder="enter"></label>
+    .progress-container {
+      margin-top: 30px;
+      width: 100%;
+      height: 10px;
+      background-color: #f3f3f3;
+      border-radius: 5px;
+    }
 
-        <p style="margin-bottom: 5px;">10. do you think it is underated or not</p>
-        <label><input type="text" placeholder="enter"></label>
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #ff4800;
+      border-radius: 5px;
+    }
 
-        <p style="margin-bottom: 5px;">11. do you think that games now is repetetive</p>
-        <label><input type="text" placeholder="enter"></label>
+  </style>
+</head>
+<body>
 
-        <p style="margin-bottom: 5px;">12. give an advise for game developpers</p>
-        <label><input type="text" placeholder="enter"></label>
-        <br>
-        <button style="padding: 10px 20px;text-align:right ;background-color: #ff4800; color: rgb(0, 0, 0); border: none; border-radius: 5px;" type="submit">submit</button>
-    
-        
-        </div>
+<div class="container">
+  <h3 style="text-align:center">Games Questions</h3>
 
-        
-    </body>
-    
+  <div class="step active">
+    <p>1. Which category do you like the most?</p>
+    <label><input type="radio" name="q1" value="FPS games"> FPS games</label><br>
+    <label><input type="radio" name="q1" value="Role play games"> Role play games</label><br>
+    <label><input type="radio" name="q1" value="Souls like games"> Souls like games</label><br>
+    <label><input type="radio" name="q1" value="Indie games"> Indie games</label>
+    <div class="buttons">
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <p>2. Why do you like that type of games?</p>
+    <input type="text" name="q2" placeholder="Enter why">
+    <div class="buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <p>3. What competitive game do you like playing?</p>
+    <input type="text" name="q3" placeholder="Enter name of the game">
+    <div class="buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <p>4. What’s your highest rank in that game?</p>
+    <input type="text" name="q4" placeholder="Enter the rank">
+    <div class="buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <p>5. Which indie game you really liked from these?</p>
+    <label><input type="radio" name="q5" value="Hollow knight"> Hollow knight</label><br>
+    <label><input type="radio" name="q5" value="Celeste"> Celeste</label><br>
+    <label><input type="radio" name="q5" value="Ultrakill"> Ultrakill</label><br>
+    <label><input type="radio" name="q5" value="Dead Cells"> Dead Cells</label>
+    <div class="buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <p>6. How would you rate the experience?</p>
+    <label><input type="radio" name="q6" value="8-10"> 8–10</label><br>
+    <label><input type="radio" name="q6" value="5-8"> 5–8</label><br>
+    <label><input type="radio" name="q6" value="3-5"> 3–5</label><br>
+    <label><input type="radio" name="q6" value="0-3"> 0–3</label>
+    <div class="buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <p>7. What’s special in that game you chose?</p>
+    <input type="text" name="q7" placeholder="Enter your answer">
+    <div class="buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <p>8. Which of these games is more “goated” in your opinion?</p>
+    <label><input type="radio" name="q8" value="Elden Ring"> Elden Ring</label><br>
+    <label><input type="radio" name="q8" value="God of War"> God of War</label><br>
+    <label><input type="radio" name="q8" value="Red Dead Redemption 2"> Red Dead Redemption 2</label><br>
+    <label><input type="radio" name="q8" value="The Last of Us"> The Last of Us</label>
+    <div class="buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <p>9. What’s the downside of that game?</p>
+    <input type="text" name="q9" placeholder="Enter your answer">
+    <div class="buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <p>10. Do you think it’s underrated or not?</p>
+    <input type="text" name="q10" placeholder="Enter your opinion">
+    <div class="buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <p>11. Do you think games now are repetitive?</p>
+    <input type="text" name="q11" placeholder="Enter your opinion">
+    <div class="buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <p>12. Give an advice for game developers:</p>
+    <input type="text" name="q12" placeholder="Enter your advice">
+    <div class="buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="submitForm()">Submit</button>
+    </div>
+  </div>
+  
+  <div class="progress-container">
+    <div class="progress-bar"></div>
+  </div>
+</div>
+
+<script>
+  let currentStep = 0;
+  const steps = document.querySelectorAll('.step');
+  const progressBar = document.querySelector('.progress-bar');
+
+  function showStep(index) {
+    steps.forEach((step, i) => {
+      step.classList.remove('active');
+      if (i === index) step.classList.add('active');
+    });
+    updateProgressBar();
+  }
+
+  function nextStep() {
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      showStep(currentStep);
+    }
+  }
+
+  function prevStep() {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  }
+
+  function updateProgressBar() {
+    const progress = ((currentStep + 1) / steps.length) * 100;
+    progressBar.style.width = progress + '%';
+  }
+
+
+  updateProgressBar();
+</script>
+
+</body>
 </html>
